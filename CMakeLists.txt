@@ -15,6 +15,7 @@ include_directories(include)
 
 QT5_WRAP_UI(UI_HDRS
     src/UI/MainWindow.ui
+    src/UI/NoteForm.ui
 )
 
 add_executable(DataKeeper 
