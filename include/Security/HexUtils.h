@@ -18,6 +18,6 @@ private:
 
 };
 
-}; // namespace Security
+} // namespace Security
 
 #endif // __HEX_UTILS_H__

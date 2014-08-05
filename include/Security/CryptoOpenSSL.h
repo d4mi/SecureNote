@@ -17,6 +17,7 @@ public:
 	CryptoOpenSSL();
 
 	virtual SecureData EncryptWithAes256(const SecureData& input, const SecureData& key, const SecureData& iv);
+	virtual SecureData DecryptWithAes256(const SecureData& input, const SecureData& key, const SecureData& iv);
 	virtual SecureData EncryptWithDes(const std::string& input);
 
 private:

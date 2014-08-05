@@ -14,6 +14,7 @@ class ICrypto
 {
 public:
 	virtual SecureData EncryptWithAes256(const SecureData& input, const SecureData& key, const SecureData& iv) = 0;
+	virtual SecureData DecryptWithAes256(const SecureData& input, const SecureData& key, const SecureData& iv) = 0;
 	virtual SecureData EncryptWithDes(const std::string& input) = 0;
 };
 
