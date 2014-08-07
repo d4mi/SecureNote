@@ -2,9 +2,15 @@
 #include "ui_MainWindow.h"
 
 MainWindow::MainWindow()
-    : m_mainWindow(new Ui::MainWindow)
+    : ui(new Ui::MainWindow)
 {
-    m_mainWindow->setupUi(this);
+    ui->setupUi(this);
+
+}
+
+MainWindow::~MainWindow()
+{
+    delete ui;
 }
 
 void MainWindow::on_actionClose_triggered()

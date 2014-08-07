@@ -134,4 +134,4 @@ void CryptoOpenSSL::m_Init()
 	OPENSSL_config(NULL);
 }
 
-}; // namespace Security
+} // namespace Security

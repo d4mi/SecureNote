@@ -42,4 +42,4 @@ std::string HexUtils::HexToString(const SecureData& secureData) const
 	return output.str();
 }
 
-}; // namespace Security
+} // namespace Security

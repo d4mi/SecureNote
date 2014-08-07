@@ -16,12 +16,18 @@ include_directories(include)
 QT5_WRAP_UI(UI_HDRS
     src/UI/MainWindow.ui
     src/UI/NoteForm.ui
+    src/UI/NotesBrowser.ui
+    src/UI/TopPanel.ui
 )
 
 add_executable(DataKeeper 
   src/main.cpp
   include/GUI/MainWindow.h src/GUI/MainWindow.cpp
+  include/GUI/NoteForm.h src/GUI/NoteForm.cpp
+  include/GUI/StyleConfigurator.h src/GUI/StyleConfigurator.cpp
+  include/GUI/TopPanel.h src/GUI/TopPanel.cpp
 
+  include/Security/ICrypto.h
   include/Security/CryptoOpenSSL.h src/Security/CryptoOpenSSL.cpp
   include/Security/HexUtils.h src/Security/HexUtils.cpp
 

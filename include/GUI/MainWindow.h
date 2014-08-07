@@ -13,12 +13,13 @@ public:
     Q_OBJECT
 public:
     MainWindow();
+    ~MainWindow();
 
 private slots:
     void on_actionClose_triggered();
 
 private:
-    Ui::MainWindow *m_mainWindow;
+    Ui::MainWindow *ui;
 
 };
 
