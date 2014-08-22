@@ -18,6 +18,9 @@ QT5_WRAP_UI(UI_HDRS
     src/UI/NoteForm.ui
     src/UI/NotesBrowser.ui
     src/UI/TopPanel.ui
+    src/UI/MainAreaForm.ui
+    src/UI/NotesBrowserForm.ui
+    src/UI/CalendarForm.ui
 )
 
 add_executable(DataKeeper 
@@ -26,6 +29,9 @@ add_executable(DataKeeper
   include/GUI/NoteForm.h src/GUI/NoteForm.cpp
   include/GUI/StyleConfigurator.h src/GUI/StyleConfigurator.cpp
   include/GUI/TopPanel.h src/GUI/TopPanel.cpp
+  include/GUI/MainAreaForm.h src/GUI/MainAreaForm.cpp
+  include/GUI/NotesBrowserForm.h src/GUI/NotesBrowserForm.cpp
+  include/GUI/CalendarForm.h src/GUI/CalendarForm.cpp
 
   include/Security/ICrypto.h
   include/Security/CryptoOpenSSL.h src/Security/CryptoOpenSSL.cpp
@@ -33,6 +39,10 @@ add_executable(DataKeeper
 
   include/Model/Note.h src/Model/Note.cpp
   include/Model/User.h src/Model/User.cpp
+
+  include/DAL/NotesRepository.h src/DAL/NotesRepository.cpp
+
+  include/WebCapture/WebScreenshoter.h src/WebCapture/WebScreenshoter.cpp
 
   # test/SecurityTest.cpp
   # test/SecurityStringToHex.cpp
