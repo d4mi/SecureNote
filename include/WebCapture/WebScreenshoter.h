@@ -3,6 +3,8 @@
 
 #include <string>
 #include <QObject>
+#include <qt5/QtWebKitWidgets/QtWebKitWidgets>
+#include <qt5/QtCore/QString>
 
 class WebScreenshoter : public QObject
 {
@@ -11,10 +13,20 @@ class WebScreenshoter : public QObject
 public:
     WebScreenshoter();
 
-    void LoadPage(const std::string& url);
+    void LoadPage(const QString& urlString);
+    void SetSize(const QSize& size);
+
+signals:
+    void progress(int progress);
+
+private slots:
+    void onProgress(int percent);
+    void onFinished(bool ok);
 
 private:
-    //QWebPage page;
+    bool SaveFrame(QWebFrame *frame);
+    QWebPage m_page;
+    QSize m_screenshotSize;
 
 };
 

@@ -8,6 +8,7 @@ set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 
+
 find_package(Qt5Widgets REQUIRED)
 
 include_directories(/usr/include/qt5)
@@ -51,7 +52,7 @@ add_executable(DataKeeper
   ${UI_HDRS}
 )
 
-qt5_use_modules(DataKeeper Widgets)
+qt5_use_modules(DataKeeper Widgets WebKit WebKitWidgets)
 
 find_package (Threads)
 target_link_libraries(DataKeeper ${CMAKE_SOURCE_DIR}/lib/libgtest.a)
