@@ -3,7 +3,6 @@
 #include <qt5/QtCore/QUrl>
 #include <QDebug>
 
-
 WebScreenshoter::WebScreenshoter() :
     m_screenshotSize(1024, 768)
 {
@@ -20,38 +19,21 @@ void WebScreenshoter::LoadPage(const QString& urlString)
     m_page.mainFrame()->setScrollBarPolicy(Qt::Horizontal, Qt::ScrollBarAlwaysOff);
 }
 
-void WebScreenshoter::SetSize(const QSize &size)
+void WebScreenshoter::SaveImage(const QString &outputPath, const QString &outputName)
 {
-    m_screenshotSize = size;
+    QImage image = GetScreenshot();
+    image.save(outputPath + outputName);
 }
 
-void WebScreenshoter::onProgress(int percent)
+QImage WebScreenshoter::GetScreenshot()
 {
-    qDebug() << "Loading page progress: " << percent;
-    emit progress(percent);
-}
-
-void WebScreenshoter::onFinished(bool ok)
-{
-    qDebug() << "Loading page finished";
-    if( ok )
-    {
-        SaveFrame(m_page.mainFrame());
-    }
-    else
-    {
-        qDebug() << "Error occurred during loading the image";
-    }
-}
-
-bool WebScreenshoter::SaveFrame(QWebFrame *frame)
-{
-    bool result = false;
+    QWebFrame *frame = m_page.mainFrame();
 
     if( frame )
     {
         QImage image(frame->contentsSize(), QImage::Format_ARGB32_Premultiplied);
         image.fill(Qt::transparent);
+
 
         QPainter painter(&image);
         painter.setRenderHint(QPainter::Antialiasing, true);
@@ -59,11 +41,27 @@ bool WebScreenshoter::SaveFrame(QWebFrame *frame)
         painter.setRenderHint(QPainter::SmoothPixmapTransform, true);
         frame->documentElement().render(&painter);
         painter.end();
-        image.copy(0,0, m_screenshotSize.width(), m_screenshotSize.height())
-                .save("/home/xxx/file.png");
 
-        result = true;
+        // check size
+        return image.copy(0, 0, m_screenshotSize.width(), m_screenshotSize.height());
     }
+    else
+    {
+        return QImage();
+    }
+}
 
-    return result;
+void WebScreenshoter::SetSize(const QSize &size)
+{
+    m_screenshotSize = size;
+}
+
+void WebScreenshoter::onProgress(int percent)
+{
+    emit progress(percent);
+}
+
+void WebScreenshoter::onFinished(bool ok)
+{
+    emit finished(ok);
 }

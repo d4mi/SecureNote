@@ -18,6 +18,6 @@ public:
 	virtual SecureData EncryptWithDes(const std::string& input) = 0;
 };
 
-}; // namespace Security
+} // namespace Security
 
 #endif // __I_CRYPTPO_H__
