@@ -32,5 +32,21 @@ std::vector<Model::Note> NotesRepository::Where(
 
     foundItems.resize(std::distance(foundItems.begin(), it));
 
+
     return foundItems;
+}
+
+Model::Note NotesRepository::First() const
+{
+    if( m_notes.size() > 0 )
+    {
+        return m_notes[0];
+    }
+
+    throw "";
+}
+
+std::vector<Model::Note> NotesRepository::Take(const int count) const
+{
+
 }

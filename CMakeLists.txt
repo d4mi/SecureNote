@@ -53,8 +53,9 @@ set( MODEL_SRC
 set( DAL_SCR
   include/DAL/NotesRepository.h src/DAL/NotesRepository.cpp
   include/DAL/IDataContext.h src/DAL/IDataContext.cpp
-  include/DAL/IQueryable.h
+  include/DAL/IQueryable.h src/DAL/IQueryable.cpp
   include/DAL/NotesFakeDataContext.h src/DAL/NotesFakeDataContext.cpp
+  include/DAL/Query.h
 )
 
 set( WEBCAPTURE_SRC

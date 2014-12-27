@@ -19,6 +19,8 @@ public:
     std::vector<Model::Note> Select() const;
     std::vector<Model::Note> Where(
             std::function<bool (const Model::Note&)> func) const;
+    Model::Note First() const;
+    std::vector<Model::Note> Take(const int count) const;
 
 private:
     IDataContext<DBType>& m_dataContext;
