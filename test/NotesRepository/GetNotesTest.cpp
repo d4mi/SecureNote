@@ -30,7 +30,7 @@ TEST_F(NotesRepositoryTest, Querable)
 
     auto isEven = [](const int i) { return i % 2 == 0; };
 
-    IQueryable<int, std::vector> querable(numbers);
+    IQueryable<std::vector<int>> querable(numbers);
 
     auto list = querable.Where(isEven).ToList();
 
@@ -44,7 +44,7 @@ TEST_F(NotesRepositoryTest, QuerableChain)
     auto valueIsEven = [](const int i) { return i % 2 == 0; };
     auto valueLessThanFive = [](const int i) { return i < 5; };
 
-    IQueryable<int, std::vector> querable(numbers);
+    IQueryable<std::vector<int>> querable(numbers);
 
     auto list = querable.Where(valueIsEven)
             .Where(valueLessThanFive)
@@ -67,7 +67,7 @@ TEST_F(NotesRepositoryTest, MakeQueryable)
 
     ASSERT_THAT(list, ElementsAre(2, 4 ));
 }
-/*
+
 TEST_F(NotesRepositoryTest, List)
 {
     std::list<std::string> colors
@@ -104,10 +104,30 @@ TEST_F(NotesRepositoryTest, ListTake)
             .Take(2)
             .ToList();
 
-    ASSERT_THAT(list, ElementsAre("Black", "Black", "Black"));
+    ASSERT_THAT(list, ElementsAre("Black", "Black"));
 }
 
+TEST_F(NotesRepositoryTest, ListTake0)
+{
+    std::list<std::string> colors
+    {
+        "Red", "Pink", "Green", "Yellow", "Black", "White", "Black", "Green", "Black", "Green"
+    };
 
+    auto colorIsBlack = []( const std::string& color )
+    {
+        return color == "Black";
+    };
+
+    auto list = Query::Select(colors)
+            .Where(colorIsBlack)
+            .Take(0)
+            .ToList();
+
+    ASSERT_THAT(list, ElementsAre());
+}
+
+/*
 TEST_F(NotesRepositoryTest, Map)
 {
     std::map<int, std::string> pairs
@@ -125,9 +145,9 @@ TEST_F(NotesRepositoryTest, Map)
         return pair.second == "Black";
     };
 
-    auto list = Query::Select(pairs)
-            .Where(valueIsBlack);
+    auto list = Query::Select(pairs);
 
-    ASSERT_THAT(list.size(), 1);
+    //ASSERT_THAT(list.size(), 1);
 }
 */
+

@@ -6,12 +6,10 @@
 class Query
 {
 public:
-    template <typename QueryableItemType,
-              template <typename ... Args> class QueryableType>
-    static IQueryable<QueryableItemType, QueryableType> Select(
-            QueryableType<QueryableItemType> querableItem)
+    template <typename QueryableType>
+    static IQueryable<QueryableType> Select(QueryableType querableItem)
     {
-        return IQueryable<QueryableItemType, QueryableType>(querableItem);
+        return IQueryable<QueryableType>(querableItem);
     }
 
 };

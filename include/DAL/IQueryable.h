@@ -6,16 +6,17 @@
 #include <algorithm>
 #include <list>
 #include <iostream>
+#include <type_traits>
 
-template <typename QueryableItemType,
-          template <typename ...Args> class QueryableType>
+template <typename QueryableType>
 class IQueryable
 {
 public:
-    IQueryable(QueryableType<QueryableItemType> querableItem);
-    virtual ~IQueryable();
+    typedef typename QueryableType::value_type QueryableItemType;
+    typedef std::vector<QueryableItemType > QuerableContainer;
 
-    //virtual IQueryable& Select() const;
+    IQueryable(QueryableType querableItem);
+    virtual ~IQueryable();
 
     virtual IQueryable& Where(
             std::function<bool (const QueryableItemType&)> predicate);
@@ -25,68 +26,50 @@ public:
     virtual IQueryable& Take(const int );
     virtual std::list<QueryableItemType> ToList() const;
 
-
-
 private:
-    QueryableType<QueryableItemType> m_querableCollection;
+    QuerableContainer m_querableCollection;
 };
 
-template <typename QueryableItemType,
-          template <typename ...Args> class QueryableType>
-IQueryable<QueryableItemType, QueryableType>::IQueryable(
-        QueryableType<QueryableItemType> querableItem)
- : m_querableCollection(querableItem)
+template <typename QueryableType>
+IQueryable<QueryableType>::IQueryable(QueryableType querableItem)
 {
+       m_querableCollection.assign(querableItem.begin(), querableItem.end());
 }
 
-template <typename QueryableItemType,
-          template <typename ...Args> class QueryableType>
-IQueryable<QueryableItemType, QueryableType>::~IQueryable()
+template <typename QueryableType>
+IQueryable<QueryableType>::~IQueryable()
 {
 
 }
 
-template <typename QueryableItemType,
-          template <typename ...Args> class QueryableType>
-IQueryable<QueryableItemType, QueryableType>&
-    IQueryable<QueryableItemType, QueryableType>::Where(
+template <typename QueryableType>
+IQueryable<QueryableType>& IQueryable<QueryableType>::Where(
             std::function<bool (const QueryableItemType&)> predicate)
 {
-    QueryableType<QueryableItemType> foundItems(m_querableCollection.size());
-
-    auto it = std::copy_if(m_querableCollection.begin(), m_querableCollection.end(), foundItems.begin(),
-                  [=](const QueryableItemType& note) -> bool { return predicate(note); }
+    auto it = std::remove_if(m_querableCollection.begin(), m_querableCollection.end(),
+                  [=](const QueryableItemType& item) -> bool { return !predicate(item); }
     );
 
-    foundItems.resize(std::distance(foundItems.begin(), it));
-
-    m_querableCollection.clear();
-    m_querableCollection.assign(foundItems.begin(), foundItems.end() );
+    m_querableCollection.erase(it, m_querableCollection.end() );
 
     return *this;
 }
 
-template <typename QueryableItemType,
-          template <typename ...Args> class QueryableType>
-IQueryable<QueryableItemType, QueryableType>&
-    IQueryable<QueryableItemType, QueryableType>::GroupBy(
+template <typename QueryableType>
+IQueryable<QueryableType>& IQueryable<QueryableType>::GroupBy(
             std::function<bool (const QueryableItemType&)> predicate)
 {
 
 }
 
-template <typename QueryableItemType,
-          template <typename ...Args> class QueryableType>
-QueryableItemType&
-    IQueryable<QueryableItemType, QueryableType>::First()
+template <typename QueryableType>
+typename IQueryable<QueryableType>::QueryableItemType& IQueryable<QueryableType>::First()
 {
 
 }
 
-template <typename QueryableItemType,
-          template <typename ...Args> class QueryableType>
-IQueryable<QueryableItemType, QueryableType>&
-    IQueryable<QueryableItemType, QueryableType>::Take(const int count)
+template <typename QueryableType>
+IQueryable<QueryableType>& IQueryable<QueryableType>::Take(const int count)
 {
 
     int i = std::min(count, (int)m_querableCollection.size());
@@ -97,10 +80,8 @@ IQueryable<QueryableItemType, QueryableType>&
     return *this;
 }
 
-template <typename QueryableItemType,
-          template <typename ...Args> class QueryableType>
-std::list<QueryableItemType>
-    IQueryable<QueryableItemType, QueryableType>::ToList() const
+template <typename QueryableType>
+std::list<typename IQueryable<QueryableType>::QueryableItemType> IQueryable<QueryableType>::ToList() const
 {
     return std::list<QueryableItemType>(m_querableCollection.begin(),
                                    m_querableCollection.end());
