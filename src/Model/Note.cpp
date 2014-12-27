@@ -8,9 +8,21 @@ Note::Note()
 
 }
 
-Note::Note(const std::string &text, std::string &title) :
+Note::Note(const std::string &title, std::string &text) :
     m_text(text),
     m_title(title)
+{
+
+}
+
+Note::Note(const std::string &&title, std::string &&text) :
+    m_text(text),
+    m_title(title)
+{
+
+}
+
+Note::~Note()
 {
 
 }
@@ -33,6 +45,16 @@ void Note::SetTitle(const std::string &title)
 std::string Note::GetTitile() const
 {
     return m_title;
+}
+
+void Note::SetText(const std::string& text)
+{
+    m_text = text;
+}
+
+std::string Note::GetText() const
+{
+    return m_text;
 }
 
 }

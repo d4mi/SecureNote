@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 2.8.8)
 
 project("DataKeeper")
 
+set(BUILD_TYPE "tests")
+
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 set(CMAKE_BUILD_TYPE Debug)
 
@@ -50,6 +52,9 @@ set( MODEL_SRC
 
 set( DAL_SCR
   include/DAL/NotesRepository.h src/DAL/NotesRepository.cpp
+  include/DAL/IDataContext.h src/DAL/IDataContext.cpp
+  include/DAL/IQueryable.h
+  include/DAL/NotesFakeDataContext.h src/DAL/NotesFakeDataContext.cpp
 )
 
 set( WEBCAPTURE_SRC
@@ -61,14 +66,22 @@ set( COMMON_SRC
   include/Common/NonCopyable.h
 )
 
-set( TEST_SRC
-  test/SecurityTest.cpp
-  test/SecurityStringToHex.cpp
-  test/SecurityAes.cpp
-)
+if(BUILD_TYPE MATCHES "tests")
+    set( MAIN test/main.cpp )
+    set( TEST_SRC
+      #test/Security/SecurityTest.h test/Security/SecurityTest.cpp
+      #test/Security/SecurityStringToHex.cpp
+      #test/Security/SecurityAes.cpp
 
-add_executable(DataKeeper 
-  src/main.cpp
+      test/NotesRepository/NotesRepositoryTest.h test/NotesRepository/NotesRepositoryTest.cpp
+      test/NotesRepository/GetNotesTest.cpp
+    )
+else()
+    set( MAIN src/main.cpp )
+endif()
+
+add_executable(DataKeeper
+  ${MAIN}
   ${GUI_SRC}
   ${SECURITY_SRC}
   ${MODEL_SRC}
@@ -76,6 +89,7 @@ add_executable(DataKeeper
   ${WEBCAPTURE_SRC}
   ${COMMON_SRC}
   ${UI_HDRS}
+  ${TEST_SRC}
 )
 
 qt5_use_modules(DataKeeper Widgets WebKit WebKitWidgets)

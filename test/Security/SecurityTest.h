@@ -3,7 +3,7 @@
 
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
-#include "CommonNamespaces.h"
+#include "test/CommonNamespaces.h"
 #include "Security/CryptoOpenSSL.h"
 
 class SecurityTest : public ::testing::Test
