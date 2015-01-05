@@ -40,8 +40,10 @@ set( GUI_SRC
 
 set( SECURITY_SRC
   include/Security/ICrypto.h
+  include/Security/IShaProvider.h
   include/Security/CryptoOpenSSL.h src/Security/CryptoOpenSSL.cpp
   include/Security/HexUtils.h src/Security/HexUtils.cpp
+  include/Security/ShaProvider.h src/Security/ShaProvider.cpp
 )
 
 set( MODEL_SRC
@@ -70,9 +72,10 @@ set( COMMON_SRC
 if(BUILD_TYPE MATCHES "tests")
     set( MAIN test/main.cpp )
     set( TEST_SRC
-      #test/Security/SecurityTest.h test/Security/SecurityTest.cpp
-      #test/Security/SecurityStringToHex.cpp
-      #test/Security/SecurityAes.cpp
+      test/Security/SecurityTest.h test/Security/SecurityTest.cpp
+      test/Security/SecurityStringToHex.cpp
+      test/Security/SecurityAes.cpp
+      test/Security/SecuritySHA.cpp
 
       test/NotesRepository/NotesRepositoryTest.h test/NotesRepository/NotesRepositoryTest.cpp
       test/NotesRepository/GetNotesTest.cpp

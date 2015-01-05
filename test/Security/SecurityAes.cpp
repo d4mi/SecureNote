@@ -1,7 +1,7 @@
 #include "SecurityTest.h"
 #include "Security/HexUtils.h"
 
-TEST_F(SecurityTest, FirstTest)
+TEST_F(SecurityTest, AES_FirstTest)
 {
 	std::string result = "f58c4c04d6e5f1ba779eabfb5f7bfbd6";
 
@@ -18,7 +18,7 @@ TEST_F(SecurityTest, FirstTest)
     ASSERT_THAT(cipherText, result);
 }
 
-TEST_F(SecurityTest, SecondTest)
+TEST_F(SecurityTest, AES_SecondTest)
 {
 	std::string result = "e35a6dcb19b201a01ebcfa8aa22b5759";
 
@@ -35,7 +35,7 @@ TEST_F(SecurityTest, SecondTest)
     ASSERT_THAT(cipherText, result);
 }
 
-TEST_F(SecurityTest, ThirdTest)
+TEST_F(SecurityTest, AES_ThirdTest)
 {
 	std::string result = "9cfc4e967edb808d679f777bc6702c7d";
 

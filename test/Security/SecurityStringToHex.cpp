@@ -87,7 +87,7 @@ TEST_F(SecurityTest, HexToString_02)
 
 TEST_F(SecurityTest, HexToString_03)
 {
-	std::string result = "0";
+    std::string result = "00";
 
 	int input [] = { 0x00 };
 

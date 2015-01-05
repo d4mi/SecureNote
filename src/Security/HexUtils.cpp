@@ -1,5 +1,7 @@
 #include "Security/HexUtils.h"
 #include <sstream>
+#include <stdexcept>
+#include <iomanip>
 
 namespace Security
 {
@@ -36,10 +38,33 @@ std::string HexUtils::HexToString(const SecureData& secureData) const
 
 	for(SecureData::const_iterator it = secureData.cbegin(); it != secureData.cend(); ++it)
 	{
-		output << std::hex << static_cast<int>(*it);
+        output << std::hex <<
+                  std::setw(2) <<
+                  std::setfill('0') <<
+                  static_cast<int>(*it);
 	}
 
-	return output.str();
+    return output.str();
+}
+
+std::string HexUtils::HexToString(const unsigned char *secureData, const size_t size) const
+{
+    if( secureData == nullptr )
+    {
+        throw std::runtime_error("Secure Data is equal to nullptr!");
+    }
+
+    std::ostringstream output;
+
+    for( unsigned int index = 0; index < size; ++index )
+    {
+        output << std::hex <<
+                  std::setw(2) <<
+                  std::setfill('0') <<
+                  static_cast<int>( secureData[index] );
+    }
+
+    return output.str();
 }
 
 } // namespace Security
